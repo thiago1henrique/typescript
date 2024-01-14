@@ -1,36 +1,27 @@
-let produto: string = "livro";
-let preco: number = 100;
+const input = document.querySelector("input");
 
-// produto = 300;
-// preco = "300";
+const total = localStorage.getItem("total");
 
-const carro: { marca: string; ano: number } = {
-  marca: "Ford",
-  ano: 2020,
-};
-
-const barato: boolean | string = preco < 400 ? true : "produto caro";
-
-const somar = (a: number, b: number): number => a + b;
-somar(4, 4);
-
-const nintendo = {
-  nome: "nintendo",
-  preco: "2000",
-};
-
-function transformarPreco(produto: { nome: string; preco: string }) {
-  produto.preco = "R$" + produto.preco;
-  return produto;
+if (input && total) {
+  input.value = total;
+  calcularGanho(+input.value);
 }
 
-const produtoNovo = transformarPreco(nintendo);
-console.log(produtoNovo);
-
-//exercicio 1
-function normalizarTexto(texto: string) {
-  return texto.trim().toLowerCase();
+function calcularGanho(total: number) {
+  const ganho = total - total * 0.2;
+  const p = document.querySelector("p");
+  if (p) {
+    p.innerHTML = `O valor com desconto é ${ganho}`;
+  }
 }
 
-//exercicio 2
+const totalMudou = () => {
+  if(input) {
+    localStorage.setItem("total", input.value);
+    calcularGanho(+input.value);
+  }
+};
 
+if (input) {
+  input.addEventListener("input", totalMudou);
+}
